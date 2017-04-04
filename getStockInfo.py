@@ -14,36 +14,32 @@ import datetime
 from dateutil.relativedelta import relativedelta
 import os
 import pandas_datareader as pdr
-
-
-# import urllib.request
-# import urllib.parse
-# import requests
-# from bs4 import BeautifulSoup
-# import datetime
-# import json
-# import sys
-# import os
-# import csv
-
-
-
-
-
-
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+# import numpy as np
 
 # main function
 def main():
+ 
+	stockId = 2317
 
-	aapl = pdr.get_data_yahoo('AAPL', 
-		start=datetime.datetime(2006, 10, 1), 
-		end=datetime.datetime(2012, 1, 1))
+	startDay = datetime.datetime(2017, 3, 15)
+	endDay = datetime.datetime(2017, 4, 4)
 
-	data = aapl.head()
+	stockId = str(stockId) + ".tw"
+	stockAllData = pdr.get_data_yahoo(stockId, startDay, endDay)
 
+	closeData = stockAllData["Adj Close"]
+	closeData.plot()
+	plt.legend()	
+	plt.show()
+	# plt.figure()
 
+	# writer = pd.ExcelWriter('output.xlsx')
+	# stockAllData.to_excel(writer,'Sheet1')
+	# writer.save()
 
-	print(data)
+	print(closeData)
 
 if __name__ == '__main__':
 	main()
